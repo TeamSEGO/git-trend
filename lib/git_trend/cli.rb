@@ -24,6 +24,7 @@ module GitTrend
       help(:list) and return if options[:help]
       scraper = Scraper.new
       projects = scraper.get(options[:language], options[:since], options[:number])
+      Sender.to_firebase(projects, !!options[:description])
       render(projects, !!options[:description])
     rescue => e
       say "An unexpected #{e.class} has occurred.", :red
